@@ -41,8 +41,17 @@ public class BirdController : MonoBehaviour
     // Metode ini dipanggil jika burung bertabrakan dengan sesuatu
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Set burung menjadi mati jika terjadi tabrakan
-        isDead = true;
+
+        if (collision.gameObject.CompareTag("Pipe"))
+        {
+            // Hentikan game ketika burung menabrak pipa
+
+            Time.timeScale = 0; // Menghentikan semua aktivitas game
+                                // Tampilkan Game Over UI atau lakukan tindakan lain
+
+            // Set burung menjadi mati jika terjadi tabrakan
+            isDead = true;
+        }
 
         // Ketika burung mati, Anda bisa menambahkan logika seperti menampilkan layar Game Over
         // Contoh: Debug.Log("Game Over");
