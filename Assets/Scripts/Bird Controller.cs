@@ -4,15 +4,47 @@ using UnityEngine;
 
 public class BirdController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Referensi Rigidbody2D burung
+    private Rigidbody2D rb;
+
+    // Besarnya gaya lompatan
+    public float jumpForce = 5f;
+
+    // Menyimpan status apakah burung sudah mati atau tidak
+    private bool isDead = false;
+
+    // Inisialisasi
     void Start()
     {
-        
+        // Mengambil komponen Rigidbody2D yang ada di burung
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    // Update dipanggil sekali per frame
     void Update()
     {
-        
+        // Cek apakah burung sudah mati
+        if (isDead)
+            return;
+
+        // Jika pemain menekan tombol space atau klik pada layar, burung melompat
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        {
+            // Reset kecepatan vertikal menjadi 0 sebelum memberikan gaya lompatan
+            rb.velocity = Vector2.zero;
+
+            // Tambahkan gaya lompatan ke Rigidbody2D agar burung "melompat"
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+    }
+
+    // Metode ini dipanggil jika burung bertabrakan dengan sesuatu
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Set burung menjadi mati jika terjadi tabrakan
+        isDead = true;
+
+        // Ketika burung mati, Anda bisa menambahkan logika seperti menampilkan layar Game Over
+        // Contoh: Debug.Log("Game Over");
     }
 }
