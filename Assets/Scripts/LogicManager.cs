@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LogicManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int playerScore;
+    public Text scoreText;
 
-    // Update is called once per frame
-    void Update()
+    [ContextMenu("increset Score")]
+    public void addScore(int scoreToAdd)
     {
-        
+        playerScore = playerScore + scoreToAdd;
+        scoreText.text = playerScore.ToString();
     }
 }
