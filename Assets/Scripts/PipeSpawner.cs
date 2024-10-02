@@ -4,29 +4,38 @@ using UnityEngine;
 
 public class PipeSpawner : MonoBehaviour
 {
-    public GameObject pipePrefab; // Prefab pipa yang akan dipakai
-    public float spawnInterval = 2f; // Interval waktu antar spawn pipa
-    public float heightOffset = 3f; // Jarak antara pipa atas dan pipa bawah
 
-    private void Start()
+    public GameObject pipe;
+    public float spawnRate = 2;
+    private float timer = 0;
+    public float hieghtOffset = 10;
+    // Start is called before the first frame update
+    void Start()
     {
-        // Mulai Coroutine untuk spawn pipa
-        StartCoroutine(SpawnPipes());
+        spawmPipe();
     }
 
-    private IEnumerator SpawnPipes()
+    // Update is called once per frame
+    void Update()
     {
-        while (true)
+        if (timer < spawnRate)
         {
-            // Menghasilkan pipa secara acak
-            float randomY = Random.Range(-heightOffset, heightOffset);
-            Vector3 spawnPosition = new Vector3(10f, randomY, 0); // Posisi spawn pipa
-
-            // Spawn pipa
-            Instantiate(pipePrefab, spawnPosition, Quaternion.identity);
-
-            // Tunggu selama spawnInterval sebelum spawn pipa berikutnya
-            yield return new WaitForSeconds(spawnInterval);
+            timer = timer + Time.deltaTime;
         }
+        else
+        {
+            spawmPipe();
+            timer = 0;
+        }
+
+    }
+    void spawmPipe()
+    {
+
+        float lowestPoint = transform.position.y - hieghtOffset;
+        float heightPoint = transform.position.y + hieghtOffset;
+
+        Instantiate(pipe, new Vector3(transform.position.x, Random.Range(lowestPoint, heightPoint), 0), transform.rotation);
+
     }
 }

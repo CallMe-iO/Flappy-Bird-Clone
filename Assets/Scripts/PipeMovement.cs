@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class PipeMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Kecepatan pipa bergerak
 
+    public float moveSpeed = 5;
+    public float deadZone = -50;
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
     void Update()
     {
-        // Menggerakkan pipa ke kiri
-        transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+        transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
 
-        // Menghancurkan pipa jika sudah keluar dari layar
-        if (transform.position.x < -10f)
+        if (transform.position.x < deadZone)
         {
+            Debug.Log("pipe deleted");
             Destroy(gameObject);
         }
     }
